@@ -9,7 +9,15 @@ on:
 
 jobs:
   benchmarks:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - mode: "instrumentation"
+            runs-on: ubuntu-24.04
+          - mode: "walltime"
+            runs-on: codspeed-macro-codspeed-adrien-dev
+    name: Run ${{ matrix.mode }} benchmarks
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -26,4 +34,4 @@ jobs:
           run: uv run pytest tests/ --codspeed
           upload-url: ${{ secrets.CODSPEED_DEV_UPLOAD_URL }}/upload
           token: ${{ secrets.CODSPEED_DEV_TOKEN }}
-          mode: instrumentation
+          mode: ${{ matrix.mode }}
