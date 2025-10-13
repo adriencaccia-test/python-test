@@ -1,0 +1,17 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+codspeed:
+  stage: test
+  image: python:3.13
+  variables:
+    CODSPEED_RUNNER_VERSION: 4.0.0
+  before_script:
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
+    - source $HOME/.cargo/env
+    - uv sync --all-extras --dev
+    - curl -fsSL https://github.com/CodSpeedHQ/runner/releases/download/v$CODSPEED_RUNNER_VERSION/codspeed-runner-installer.sh | bash -s -- --quiet
+  script:
+    - codspeed run --mode instrumentation --upload-url="$CODSPEED_DEV_UPLOAD_URL/upload" --token "$CODSPEED_DEV_TOKEN" -- uv run pytest tests/ --codspeed
