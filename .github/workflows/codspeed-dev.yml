@@ -33,5 +33,4 @@ jobs:
         with:
           run: uv run pytest tests/ --codspeed
           upload-url: ${{ secrets.CODSPEED_DEV_UPLOAD_URL }}/upload
-          token: ${{ secrets.CODSPEED_DEV_TOKEN }}
           mode: ${{ matrix.mode }}
