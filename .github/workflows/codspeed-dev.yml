@@ -12,10 +12,8 @@ jobs:
     strategy:
       matrix:
         include:
-          # - mode: "instrumentation"
-          #   runs-on: ubuntu-24.04
-          - mode: "walltime"
-            runs-on: codspeed-macro-codspeed-adrien-dev
+          - mode: "instrumentation"
+            runs-on: ubuntu-24.04
     name: Run ${{ matrix.mode }} benchmarks
     runs-on: ${{ matrix.runs-on }}
     steps:

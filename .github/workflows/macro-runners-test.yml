@@ -1,0 +1,14 @@
+name: macro runners test
+
+on:
+  pull_request:
+
+jobs:
+  gen1:
+    runs-on: codspeed-macro-codspeed-adrien-dev-arm64-graviton-ubuntu-22-04
+    steps:
+      - run: echo "gen1"
+  gen2:
+    runs-on: codspeed-macro-codspeed-adrien-dev-x64-ryzen-9950x-ubuntu-24-04
+    steps:
+      - run: echo "gen2"
